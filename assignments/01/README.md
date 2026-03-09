@@ -38,6 +38,7 @@ which will actually run the `main` function in `main.cpp`. This will execute you
 As you are following the instructions below, we recommend intermittently compiling/testing with the autograder as a way to make sure you're on the right track!
 
 > [!NOTE]  
+>
 > ### Note for Windows
 > On Windows, you may need to compile your code using
 > ```sh
@@ -69,7 +70,7 @@ stream 😏?
 
 1. Take a look at the `split` function we provide in `utils.cpp`. It may come in handy!
     * Feel free to check out the implementation of `split` and ask us any questions about it – you
-should be able to reason about it since it’s using a `stringstream`.
+    should be able to reason about it since it’s using a `stringstream`.
 2. Each **line** is a record! *This is important, so we're saying it again :>)*
 3. In CSV files (and specifically in `courses.csv`), the first line is usually a row that defines the column names (a column header row). This line doesn't actually correspond to a `Course`, so you'll need to skip it somehow!
 
@@ -82,6 +83,7 @@ interested in only the courses that are offered, right? **A course is considered
 
 > [!IMPORTANT]  
 > When writing out to the CSV file, please follow this format:
+>
 > ```
 > <Title>,<Number of Units>,<Quarter>
 > ```

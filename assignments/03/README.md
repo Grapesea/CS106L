@@ -64,6 +64,7 @@ As you are following the instructions below, we recommend intermittently compili
 Let your creative juices flow! Fill in `class.h` and `class.cpp` to create your own custom class. Please refer to the relevant slides from Tuesday's lecture on classes for more information. Your class can represent pretty much anything you want, as long as it meets the following requirements.
 
 > [!IMPORTANT]
+>
 > ### Class Requirements
 >
 > Your class must:
@@ -90,7 +91,7 @@ Note that this is the bare minimum to get credit for the assignment. Please feel
 > ```sh
 > g++ -std=c++20 main.cpp -o main
 > ```
-> 
+>
 > Remember to also swap the includes so that the `.h` file includes the `.cpp`
 > file at the end of the file, as discussed in Thursday's lecture.
 
@@ -104,6 +105,7 @@ Please answer the following questions inside `short_answer.txt`. We expect about
 
 > [!IMPORTANT]
 > `short_answer.txt`
+>
 > - **Q1:** What’s const-correctness and why is it important?
 > - **Q2:** Is your class const-correct? How do you know?
 

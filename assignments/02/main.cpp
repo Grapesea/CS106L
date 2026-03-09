@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "Grapesea Aurora"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -29,6 +29,13 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  */
 std::set<std::string> get_applicants(std::string filename) {
   // STUDENT TODO: Implement this function.
+  std::ifstream data(filename);
+  std::string line;
+  std::set<std::string> name_result;
+  while (getline(data, line)){
+    name_result.insert(line);
+  }
+  return name_result;
 }
 
 /**
@@ -39,8 +46,31 @@ std::set<std::string> get_applicants(std::string filename) {
  * @param students  The set of student names.
  * @return          A queue containing pointers to each matching name.
  */
+
+std::string initials(const std::string name){
+  std::string init = "";
+  if (!name.empty()){
+    init += name[0];
+  }
+  for (int i = 1; i < (int)name.size()-1; i++){
+    if (name[i] == ' ') //不能用双引号，此处name[i]是char，' '是char而" "是const char*
+      init += name[i+1];
+  }
+  return init;
+}
+
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  std::queue<const std::string*> p; 
+  std::string init = initials(name);
+
+  for (const std::string& i : students){
+    if (initials(i) == init){
+      p.push(&(i));
+    }
+  }
+
+  return p;
 }
 
 /**
@@ -55,6 +85,10 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  if (matches.empty()){
+    return "NO MATCHES FOUND.";
+  }
+  return *(matches.front()); // 直接选第一个，懒得想随机方法了.
 }
 
 /* #### Please don't remove this line! #### */

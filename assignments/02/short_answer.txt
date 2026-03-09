@@ -1,11 +1,22 @@
-Before submitting this file, make sure that there are no more TODO
-placeholders remaining in the file (and remove this comment too).
-
 Marriage Pact
 -------------
 
 Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
-A1. TODO
+A1. I opt to use ordered set.
 
 Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
-A2. TODO
+A2. This may lead to waste of memory and extra cost of copying. Dangling pointers will be constructed. e.g.
+
+```c
+std::queue<const std::string*> q;
+{
+    std::set<std::string> students = {"Alice Adams", "Bob Brown"};
+    q = find_matches("Anna Allen", students);
+} // students 在这里销毁，内存被释放
+
+// ❌ 危险！指针指向已释放的内存
+std::cout << *(q.front());
+```
+
+At this situation, the destruction of q pointer is ahead of the dereference of p, 
+leading to undefined behavior.

@@ -5,7 +5,7 @@ Make a Class
 ------------
 
 Q1. What’s const-correctness and why is it important?
-A1. TODO
+A1. To guarantee not modify any of the variables inside the class.
 
 Q2. Is your class const-correct? How do you know?
-A2. TODO
+A2. const is set behind the () embrace, and do not make any modifications to the class variables.

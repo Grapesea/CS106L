@@ -116,13 +116,13 @@ Here's a step-by-step guide you can follow to accomplish this:
 
       ```cpp
       int isspace(int ch);                          // Defined in header <cctype> and <ctype.h>
-
+    
       template <class CharT>
       bool isspace(CharT ch, const locale& loc);    // Defined in header <locale>
       ```
-
+    
       Technically, the first version is defined both [as part of the `namespace std`](https://en.cppreference.com/w/cpp/header/cctype) and [as a free-floating function inherited from C](https://en.cppreference.com/w/c/string/byte) (and not in any particular namespace). The second version is part of `std` and defined in the `<locale>` header. Writing `isspace` by itself refers to the C version, whereas `std::isspace` refers to both of the above functions and so the compiler has a hard time inferring the `UnaryPred` type parameter.
-
+    
       Sometimes you will see people write `::isspace`: this just tells C++ to look in the *global namespace* (not inside `std`) for `isspace`, and accomplishes the same thing.
 
 2. **Step Two: Generate tokens between consecutive space characters**  
@@ -239,9 +239,9 @@ Here's a step-by-step guide to implement this algorithm:
 
     ```cpp
     auto view = std::ranges::views::filter(source, /* A lambda function predicate */);
-
+    
     /* ...is the same as... */
-
+    
     auto view = source | std::ranges::views::filter(/* A lambda function predicate */);
     ```
 
@@ -321,10 +321,11 @@ Here's a step-by-step guide to implement this algorithm:
 
     > ⚠️ [**`std::ranges::to`**](https://en.cppreference.com/w/cpp/ranges/to)  
     > You might remember that we used `std::ranges::to` in lecture to materialize a view of `char` into an `std::string`:
+    >
     > ```cpp
     > auto v = s | rv::filter(isalpha)
-    >            | /* Some other steps */
-    >            | std::ranges::to<std::string>();
+    >         | /* Some other steps */
+    >         | std::ranges::to<std::string>();
     > ```
     > You might be tempted to do something similar here with `std::ranges::to<std::set<Misspelling>>()`. This is a good idea! But the `std::ranges::to` method was only recently introduced in C++23. Depending on the version of compiler you are using, this code may compile or it may not! To be safe, and to make sure that your code compiles when we run it through the autograder on our end, please use the `std::set<Misspelling>` constructor with iterators. **In general, please only use C++ features up through C++20 for this assignment.**
 
@@ -369,7 +370,6 @@ You can also spellcheck one of the given examples:
 > If you are looking for an added challenge, try running your code with the `--profile` option. Our spellchecking algorithm, despite using a simple brute
 > force approach that searches through the entire dictionary of about half a million words, still runs quite quickly! Feel free to look into ways you can
 > improve the performance of this algorithm (while still having correct output)! This is completely optional, but we would love to see what you come up with.
-
 
 ## 🚀 Submission Instructions
 

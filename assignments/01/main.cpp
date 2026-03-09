@@ -25,9 +25,9 @@ const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered
  * Hint: Remember what types C++ streams work with?!
  */
 struct Course {
-  /* STUDENT TODO */ title;
-  /* STUDENT TODO */ number_of_units;
-  /* STUDENT TODO */ quarter;
+  std::string title;
+  std::string number_of_units;
+  std::string quarter;
 };
 
 /**
@@ -58,8 +58,20 @@ struct Course {
  * @param filename The name of the file to parse.
  * @param courses  A vector of courses to populate.
  */
-void parse_csv(std::string filename, std::vector<Course> courses) {
+void parse_csv(std::string filename, std::vector<Course>& courses) {
   /* (STUDENT TODO) Your code goes here... */
+  std::ifstream csv_data(filename); //默认是读模式
+  std::string line;
+  std::getline(csv_data, line); //去掉第一行
+  while (std::getline(csv_data, line)){
+    std::vector<std::string> vec = split(line, ','); // eg. <"......", "2", "null">
+    Course result;
+
+    result.title = vec[0];
+    result.number_of_units = vec[1];
+    result.quarter = vec[2];
+    courses.push_back(result);
+  }
 }
 
 /**
@@ -80,8 +92,23 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
  * @param all_courses A vector of all courses gotten by calling `parse_csv`.
  *                    This vector will be modified by removing all offered courses.
  */
-void write_courses_offered(std::vector<Course> all_courses) {
+void write_courses_offered(std::vector<Course>& all_courses) {
   /* (STUDENT TODO) Your code goes here... */
+  int len = all_courses.size();
+
+  std::ofstream file(COURSES_OFFERED_PATH);
+  file << "Title,Number of Units,Quarter\n";
+  int i = 0;
+  while (i < len){
+    Course p = all_courses[i];
+    if (p.quarter != "null\r"){ //执行写入，这里的"\r"要加上去且不能写"\n"，一开始不知道，为此被硬控了一会
+      file << p.title << "," << p.number_of_units << "," << p.quarter;
+      delete_elem_from_vector(all_courses, p);
+      len -= 1;
+    }
+    else
+      i++;
+  }
 }
 
 /**
@@ -97,8 +124,24 @@ void write_courses_offered(std::vector<Course> all_courses) {
  *
  * @param unlisted_courses A vector of courses that are not offered.
  */
-void write_courses_not_offered(std::vector<Course> unlisted_courses) {
+void write_courses_not_offered(std::vector<Course>& unlisted_courses) {
   /* (STUDENT TODO) Your code goes here... */
+  int len = unlisted_courses.size();
+
+  std::ofstream file(COURSES_NOT_OFFERED_PATH);
+  file << "Title,Number of Units,Quarter\n";
+  int i = 0;
+  while (i < len){
+    Course p = unlisted_courses[i];
+    if (p.quarter == "null\r"){ //执行写入
+      file << p.title << "," << p.number_of_units << "," << p.quarter; 
+      //写入的时候把空格删掉
+      delete_elem_from_vector(unlisted_courses, p);
+      len -= 1;
+    }
+    else
+      i++;
+  }
 }
 
 int main() {
@@ -109,10 +152,11 @@ int main() {
   parse_csv("courses.csv", courses);
 
   /* Uncomment for debugging... */
-  // print_courses(courses);
+  print_courses(courses);
 
   write_courses_offered(courses);
+  print_courses(courses);
   write_courses_not_offered(courses);
-
+  //return 0;
   return run_autograder();
 }
