@@ -1,7 +1,6 @@
 <p align="center">
   <img src="docs/logo.jpeg" alt="A logo of Treebook, a fictional Stanford-based social media startup" style="width: 300px; height: auto;" />
 </p>
-
 # Assignment 5: Treebook
 
 Due Saturday, November 15th at 11:59PM

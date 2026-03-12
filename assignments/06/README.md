@@ -50,7 +50,7 @@ At the top of the `main.cpp` include `<optional>`, we're going to make use of `s
 This function takes in a string `course_title`, and the function should try to find the `course` inside of the private `courses` member of the `CourseDatabase` object. What should the return type be? (hint: there may or may not be a `Course` for the `course_title` passed in)
 
 > [!NOTE]
-> You need to change the type returned by `find_course` which is currenty `FillMeIn`.
+> You need to change the type returned by `find_course` which is currently `FillMeIn`.
 
 ## Part 2: Modifying the `main` function
 

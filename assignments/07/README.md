@@ -85,7 +85,7 @@ You will implement the basic pointer interface for a `unique_ptr` by implementin
 
 ### Implementing RAII
 
-At this point, our `unique_ptr` will behave as if it were a raw pointer, but it will not actually do any automatic memory management such as deallocating memory when a `unique_ptr` variable goes out of scope. Add to that, our pointer is not *unique*: multiple copies of it (all pointing to the same memory) can be made indiscriminantly. For example, let's assume that our `unique_ptr` properly cleans up its data when it goes out of scope. Consider the following code block:
+At this point, our `unique_ptr` will behave as if it were a raw pointer, but it will not actually do any automatic memory management such as deallocating memory when a `unique_ptr` variable goes out of scope. Add to that, our pointer is not *unique*: multiple copies of it (all pointing to the same memory) can be made indiscriminately. For example, let's assume that our `unique_ptr` properly cleans up its data when it goes out of scope. Consider the following code block:
 
 ```cpp
 int main() 
@@ -120,7 +120,9 @@ In order to achieve these goals — automatic deallocation of memory, no copying
 After implementing the above functions, you should be passing all of the autograder tests for **Part 1**.
 
 > [!IMPORTANT]  
-> ##### `short_answer.txt`  
+>
+> ##### `short_answer.txt`
+>
 > **Q2:** When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
 
 ## Part 2: Using `unique_ptr`
@@ -155,7 +157,9 @@ int main()
 Notice that we didn't have to make any calls to `delete`! The RAII behaviour of `unique_ptr` guarantees that all memory in the list is deallocated recursively. When `head` goes out of scope, it calls the destructor of node `(1)`, which calls the destructor of `(2)`, which calls the destructor of `(3)`. 
 
 > [!IMPORTANT]  
-> ##### `short_answer.txt`  
+>
+> ##### `short_answer.txt`
+>
 > **Q3:** This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
 
 **Your task is to implement the function `create_list` which converts a `std::vector<T>` into a `unique_ptr<ListNode<T>>`.** The order of elements in the vector should be preserved in the list, and `nullptr` should be returned for an empty vector. There are many ways you could go about this; one is to construct the list in reverse (starting at the tail and working towards the head). **Note that you must use the `cs106l::unique_ptr` under the `cs106l` namespace, and not the `std::unique_ptr`!** Here is an algorithm you should follow in your implementation:
@@ -168,7 +172,9 @@ Notice that we didn't have to make any calls to `delete`! The RAII behaviour of 
 3. Finally, return `head`
 
 > [!IMPORTANT]  
-> ##### `short_answer.txt`  
+>
+> ##### `short_answer.txt`
+>
 > **Q4.** In your implementation of points 2b and 2c, you may have a hard time getting the compiler to allow you to assign, for example, `node->next` to `head` as it will complain that there is no copy assignment operator. That is exactly right, as `unique_ptr` cannot be copied as we discussed previously!
 >
 > In order to get the behaviour we want, we must force the compiler to **move assign** `head` into `node->next` rather than copy assign. Recall from the move semantics lecture that we can do this by writing `node->next = std::move(head)`.

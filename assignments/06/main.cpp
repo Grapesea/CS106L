@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <type_traits>
 #include <vector>
+#include <optional>
 
 /** STUDENT_TODO: You will need to include a relevant header file here! */
 
@@ -52,10 +53,16 @@ public:
    * @param course_title The title of the course to find.
    * @return You will need to figure this out!
    */
-  FillMeIn find_course(std::string course_title)
+  std::optional<Course> find_course(std::string course_title) const
   {
     /* STUDENT_TODO: Implement this method! You will need to change the return
      * type. */
+    for (auto& i : courses){
+      if (i.title == course_title){
+        return i;
+      }
+    }
+    return std::nullopt;
   }
 
 private:
@@ -81,8 +88,22 @@ main(int argc, char* argv[])
     Please pay special attention to the README here
     ********************************************************/
 
-    std::string output = /* STUDENT_TODO */
-
+    std::string output = course.transform([](const Course& c) -> std::string {
+                                    return "Found course: " + c.title + "," +
+                                          c.number_of_units + "," + c.quarter + "\n";
+                                })
+                                .or_else([]() -> std::optional<std::string> {
+                                    return "Course not found.\n";
+                                })
+                                .value();    
+    /* 实际上这么写也是对的，但是不符合题意，因为value_or是不确定性的兜底，value是确定了之后的取值：
+    std::string output = course
+    .transform([](const Course& c) -> std::string {
+        return "Found course: " + c.title + "," +
+               c.number_of_units + "," + c.quarter + "\n";
+    })
+    .value_or("Course not found.\n");
+    */
     /********************************************************
      DO NOT MODIFY ANYTHING BELOW THIS LINE PLEASE
     ********************************************************/

@@ -5,13 +5,14 @@ Unique Pointer
 --------------
 
 Q1. List one or two benefits of using RAII to manage memory instead manually calling `new` and `delete`.
-A1. TODO
+A1. 1.(smart pointers) avoid daggling pointer if an error accurs before `delete`.
+    2.(`std::optional`) deal with null-value results safely
 
 Q2. When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
-A2. TODO
+A2. Two pointers point to the same memory, leading to double free (delete one memory twice, an undefined behavior). 
 
 Q3. This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
-A3. TODO
+A3. Each dtor takes up a frame on call stack (only several MB). If list is long enough, the program will result in stack overflow and crash.
 
 Q4. What does `std::move` do in this context? Why is it safe to use `std::move` and move semantics here?
-A4. TODO
+A4. Destroy the node immediately, making space for call stack to avoid stack overflow.
